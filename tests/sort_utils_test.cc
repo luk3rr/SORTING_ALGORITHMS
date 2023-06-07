@@ -36,7 +36,7 @@ TEST_CASE("HeapSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::HeapSort(array, arrayRandomLength);
+    SortUtils<int>::HeapSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
@@ -74,7 +74,7 @@ TEST_CASE("ShellSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::ShellSort(array, arrayRandomLength);
+    SortUtils<int>::ShellSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
@@ -111,7 +111,7 @@ TEST_CASE("MergeSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::MergeSort(array, arrayRandomLength);
+    SortUtils<int>::MergeSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
@@ -149,7 +149,7 @@ TEST_CASE("InsertionSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::InsertionSort(array, arrayRandomLength);
+    SortUtils<int>::InsertionSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
@@ -186,7 +186,7 @@ TEST_CASE("CountingSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::CountingSort(array, arrayRandomLength);
+    SortUtils<int>::CountingSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
@@ -223,7 +223,7 @@ TEST_CASE("BucketSort") {
         std::swap(array[i], array[randomPosition]);
     }
 
-    SortUtils::BucketSort(array, arrayRandomLength);
+    SortUtils<int>::BucketSort(array, arrayRandomLength);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
