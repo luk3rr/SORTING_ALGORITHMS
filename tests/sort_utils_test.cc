@@ -11,6 +11,7 @@
 
 #include "doctest.h"
 #include "sort_utils.h"
+#include "vector.h"
 
 #define ARRAY_MAX_LENGHT_TEST 10000
 #define ARRAY_MIN_LENGHT_TEST 100
@@ -21,33 +22,33 @@ TEST_CASE("HeapSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::HeapSort(array, arrayRandomLength);
+    SortUtils<int>::HeapSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
 
     CHECK(correct);
@@ -59,34 +60,35 @@ TEST_CASE("ShellSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::ShellSort(array, arrayRandomLength);
+    SortUtils<int>::ShellSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
+
     CHECK(correct);
 }
 
@@ -96,34 +98,35 @@ TEST_CASE("MergeSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::MergeSort(array, arrayRandomLength);
+    SortUtils<int>::MergeSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
+
     CHECK(correct);
 }
 
@@ -134,34 +137,35 @@ TEST_CASE("InsertionSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::InsertionSort(array, arrayRandomLength);
+    SortUtils<int>::InsertionSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
+
     CHECK(correct);
 }
 
@@ -171,34 +175,35 @@ TEST_CASE("CountingSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::CountingSort(array, arrayRandomLength);
+    SortUtils<int>::CountingSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
+
     CHECK(correct);
 }
 
@@ -208,33 +213,34 @@ TEST_CASE("BucketSort") {
     int arrayRandomLength = (std::rand() % (ARRAY_MAX_LENGHT_TEST - ARRAY_MIN_LENGHT_TEST + 1) + ARRAY_MIN_LENGHT_TEST);
 
     int *checkArray = new int[arrayRandomLength]; // Array de verificação
-    int *array = new int[arrayRandomLength]; // Array que será ordenado
+    Vector<int> vector; // Vetor que será ordenado
+
     int randomPosition;
 
     // Preenche os arrays com uma sequencia de números
     for (int i = 0; i < arrayRandomLength; i++) {
-        array[i] = i;
+        vector.PushBack(i);
         checkArray[i] = i;
     }
 
     // Embaralha os números do array que será ordenado
     for (int i = arrayRandomLength - 1; i > 0; i--) {
         randomPosition = std::rand() % (i + 1);
-        std::swap(array[i], array[randomPosition]);
+        vector.Swap(i, randomPosition);
     }
 
-    SortUtils<int>::BucketSort(array, arrayRandomLength);
+    SortUtils<int>::BucketSort(vector);
     bool correct = true;
 
     // Verificação se a ordenação foi bem sucedida
     for (int i = 0; i < arrayRandomLength; i++) {
-        if (array[i] != checkArray[i]) {
+        if (vector[i] != checkArray[i]) {
             correct = false;
             break;
         }
     }
 
-    delete[] array;
     delete[] checkArray;
+
     CHECK(correct);
 }

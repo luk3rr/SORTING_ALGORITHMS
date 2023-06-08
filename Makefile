@@ -19,8 +19,12 @@ CFLAGS = --std=c++20 -O0 -Wall
 MAIN = $(OBJ_DIR)/main.o
 
 PROGRAM_OBJS =	$(OBJ_DIR)/sort_utils.o \
+				$(OBJ_DIR)/utils.o \
+				$(OBJ_DIR)/vector.o \
+				$(OBJ_DIR)/vector_excpt.o
 
 TEST_OBJS = $(OBJ_DIR)/sort_utils_test.o \
+			$(OBJ_DIR)/vector_test.o \
 			$(OBJ_DIR)/main_doctest.o
 
 # CASES
