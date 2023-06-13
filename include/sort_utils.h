@@ -105,7 +105,7 @@ void SortUtils<typeT>::MaxHeapify(Vector<typeT> &subvector, unsigned int positio
         largest = right;
 
     if (largest != position) {
-        std::swap(subvector[position], subvector[largest]);
+        subvector.Swap(position, largest);
         SortUtils<typeT>::MaxHeapify(subvector, largest, size);
     }
 }
@@ -122,7 +122,7 @@ void SortUtils<typeT>::HeapSort(Vector<typeT> &vector) {
     SortUtils<typeT>::BuildMaxHeap(vector, vector.Size());
 
     for (int i = vector.Size() - 1; i > 0; i--) {
-        std::swap(vector[0], vector[i]);
+        vector.Swap(0, i);
         SortUtils<typeT>::MaxHeapify(vector, 0, i);
     }
 }
@@ -144,7 +144,7 @@ void SortUtils<typeT>::ShellSort(Vector<typeT> &vector) {
             j = i;
             while (j >= h and vector[j - h] > vector[j]) {
                 operacoes++;
-                std::swap(vector[j], vector[j - h]);
+                vector.Swap(j, j - h);
                 j -= h;
             }
         }
@@ -173,28 +173,18 @@ void SortUtils<typeT>::MergeSortedSubarrays(Vector<typeT> &subvector, int left, 
     k = left;
 
     while (i < firstHalf and j < secondHalf) {
-        if (leftArray[i] <= rightArray[j]) {
-            subvector[k] = leftArray[i];
-            i++;
-        }
-        else {
-            subvector[k] = rightArray[j];
-            j++;
-        }
-        k++;
+        if (leftArray[i] <= rightArray[j])
+            subvector[k++] = leftArray[i++];
+
+        else
+            subvector[k++] = rightArray[j++];
     }
 
-    while (i < firstHalf) {
-        subvector[k] = leftArray[i];
-        i++;
-        k++;
-    }
+    while (i < firstHalf)
+        subvector[k++] = leftArray[i++];
 
-    while (j < secondHalf) {
-        subvector[k] = rightArray[j];
-        j++;
-        k++;
-    }
+    while (j < secondHalf)
+        subvector[k++] = rightArray[j++];
 }
 
 template<typename typeT>
