@@ -41,6 +41,13 @@ class Vector {
         typeT &operator[](unsigned int index);
 
         /**
+        @brief Overload do operador ==
+        @param other Vetor que será usado na verificação
+        @return True se forem iguais, False caso contrário
+        */
+        bool operator==(Vector<typeT> &other);
+
+        /**
         @brief Pega o tamanho atual do vector
         @return Inteiro que representa o tamanho do vector
         */
@@ -100,6 +107,20 @@ typeT &Vector<typeT>::operator[](unsigned int index) {
         throw vecexcpt::InvalidIndex();
 
     return this->m_elements[index];
+}
+
+template<typename typeT>
+bool Vector<typeT>::operator==(Vector<typeT> &other) {
+    if (this->m_size != other.Size())
+        return false;
+
+    for (unsigned int i = 0; i < this->m_size; i++) {
+        if (this->m_elements[i] != other[i]) {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 template<typename typeT>
