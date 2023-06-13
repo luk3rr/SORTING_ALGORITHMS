@@ -218,7 +218,7 @@ template<typename typeT>
 void SortUtils<typeT>::InsertionSort(Vector<typeT> &vector) {
     int key, j;
 
-    for (unsigned int i = 0; i < vector.Size(); i++) {
+    for (unsigned int i = 1; i < vector.Size(); i++) {
         key = vector[i];
         j = i - 1;
 
