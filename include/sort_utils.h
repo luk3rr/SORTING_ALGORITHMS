@@ -264,8 +264,7 @@ void SortUtils<typeT>::CountingSort(Vector<typeT> &vector) {
     // Ordena o array
     for (int i = 0; i <= max; i++) {
         while (countArray[i] > 0) {
-            vector[index] = i;
-            index++;
+            vector[index++] = i;
             countArray[i]--;
         }
     }

@@ -2,16 +2,26 @@
 SRC_DIR = src
 OBJ_DIR = obj
 INC_DIR = include
-3RD_DIR = 3rd_party
-TST_DIR = tests
 BIN_DIR = bin
+LIB_DIR = $(INC_DIR)/lib
+TST_DIR = $(SRC_DIR)/tests
 
 # NOME DOS EXECUTAVEIS
 PROGRAM_NAME = program
 TEST_NAME = test
 
 # CONFIGURAÇÕES DO COMPILADOR
-CC = g++
+OS_NAME := $(shell grep -oP '(?<=^NAME=).+' /etc/os-release | tr -d '"')
+
+ifeq ($(OS_NAME), Ubuntu)
+    # Please, install g++12: sudo apt install g++-12
+	CC = g++-12
+
+else
+	CC = g++
+
+endif
+
 LIBS = -lm
 CFLAGS = --std=c++20 -O0 -Wall
 
@@ -46,7 +56,7 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc $(INC_DIR)/%.h
 	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -o $@
 
 $(OBJ_DIR)/%.o: $(TST_DIR)/%.cc
-	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -I $(3RD_DIR) -o $@
+	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -I $(LIB_DIR) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
 	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -o $@
