@@ -47,6 +47,18 @@ class SortUtils {
 
     public:
         /**
+        @brief Utiliza o algoritmo BubbleSort para ordenar o vector
+        @param vector Vector que será ordenado
+        */
+        static void BubbleSort(Vector<typeT> &vector);
+
+        /**
+        @brief Utiliza o algoritmo SelectionSort para ordenar o vector
+        @param vector Vector que será ordenado
+        */
+        static void SelectionSort(Vector<typeT> &vector);
+
+        /**
         @brief Utiliza o algoritmo HeapSort para ordenar o vector
         @param vector Vector que será ordenado
         */
@@ -89,6 +101,45 @@ class SortUtils {
         */
         static void BucketSort(Vector<typeT> &vector);
 };
+
+// ----------------------------------------------------- BUBBLESORT -------------------------------------------------------
+
+template<typename typeT>
+void SortUtils<typeT>::BubbleSort(Vector<typeT> &vector) {
+    bool swapped;
+
+    for (unsigned int i = 0; i < vector.Size() - 1; i++) {
+        swapped = false;
+
+        for (unsigned int j = 0; j < vector.Size() - i - 1; j++) {
+            if (vector[j] > vector[j + 1]) {
+                vector.Swap(j + 1, j);
+                swapped = true;
+            }
+        }
+        if (!swapped)
+            break;
+    }
+}
+
+// ----------------------------------------------------- SELECTIONSORT -------------------------------------------------------
+
+template<typename typeT>
+void SortUtils<typeT>::SelectionSort(Vector<typeT> &vector) {
+    unsigned int min;
+
+    for (unsigned int i = 0; i < vector.Size() - 1; i++) {
+        min = i;
+
+        for (unsigned int j = i + 1; j < vector.Size(); j++) {
+            if (vector[j] < vector[min])
+                min = j;
+        }
+
+        if (i != min)
+            vector.Swap(min, i);
+    }
+}
 
 // ----------------------------------------------------- HEAPSORT -------------------------------------------------------
 
