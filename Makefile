@@ -28,13 +28,27 @@ CFLAGS = --std=c++20 -O0 -Wall
 # ARQUIVOS
 MAIN = $(OBJ_DIR)/main.o
 
-PROGRAM_OBJS =	$(OBJ_DIR)/sort_utils.o \
-				$(OBJ_DIR)/utils.o \
+PROGRAM_OBJS =  $(OBJ_DIR)/utils.o \
 				$(OBJ_DIR)/vector.o \
-				$(OBJ_DIR)/vector_excpt.o
+				$(OBJ_DIR)/vector_excpt.o \
+				$(OBJ_DIR)/bubble_sort.o \
+				$(OBJ_DIR)/bucket_sort.o \
+				$(OBJ_DIR)/counting_sort.o \
+				$(OBJ_DIR)/heap_sort.o \
+				$(OBJ_DIR)/insertion_sort.o \
+				$(OBJ_DIR)/merge_sort.o \
+				$(OBJ_DIR)/selection_sort.o \
+				$(OBJ_DIR)/shell_sort.o
 
-TEST_OBJS = $(OBJ_DIR)/sort_utils_test.o \
-			$(OBJ_DIR)/vector_test.o \
+TEST_OBJS = $(OBJ_DIR)/vector_test.o \
+			$(OBJ_DIR)/bubble_sort_test.o \
+			$(OBJ_DIR)/bucket_sort_test.o \
+			$(OBJ_DIR)/counting_sort_test.o \
+			$(OBJ_DIR)/heap_sort_test.o \
+			$(OBJ_DIR)/insertion_sort_test.o \
+			$(OBJ_DIR)/merge_sort_test.o \
+			$(OBJ_DIR)/selection_sort_test.o \
+			$(OBJ_DIR)/shell_sort_test.o \
 			$(OBJ_DIR)/main_doctest.o
 
 # CASES
