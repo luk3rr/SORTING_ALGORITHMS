@@ -36,7 +36,7 @@ namespace sort {
                     swapped = true;
                 }
             }
-            if (!swapped) break;
+            if (not swapped) break;
         }
     }
 }

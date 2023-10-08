@@ -27,29 +27,8 @@ CFLAGS = --std=c++20 -O0 -Wall
 
 # ARQUIVOS
 MAIN = $(OBJ_DIR)/main.o
-
-PROGRAM_OBJS =  $(OBJ_DIR)/utils.o \
-				$(OBJ_DIR)/vector.o \
-				$(OBJ_DIR)/vector_excpt.o \
-				$(OBJ_DIR)/bubble_sort.o \
-				$(OBJ_DIR)/bucket_sort.o \
-				$(OBJ_DIR)/counting_sort.o \
-				$(OBJ_DIR)/heap_sort.o \
-				$(OBJ_DIR)/insertion_sort.o \
-				$(OBJ_DIR)/merge_sort.o \
-				$(OBJ_DIR)/selection_sort.o \
-				$(OBJ_DIR)/shell_sort.o
-
-TEST_OBJS = $(OBJ_DIR)/vector_test.o \
-			$(OBJ_DIR)/bubble_sort_test.o \
-			$(OBJ_DIR)/bucket_sort_test.o \
-			$(OBJ_DIR)/counting_sort_test.o \
-			$(OBJ_DIR)/heap_sort_test.o \
-			$(OBJ_DIR)/insertion_sort_test.o \
-			$(OBJ_DIR)/merge_sort_test.o \
-			$(OBJ_DIR)/selection_sort_test.o \
-			$(OBJ_DIR)/shell_sort_test.o \
-			$(OBJ_DIR)/main_doctest.o
+PROGRAM_OBJS := $(shell find $(SRC) -type f -name "*.cc" ! -name "main.cc" ! -name "*test.cc" -exec echo '$(OBJ_DIR)/{}' \; | sed 's/src\///;s/\/\.\//\//;s/\.cc/.o/')
+TEST_OBJS := $(shell find $(TST_DIR) -type f -name "*.cc" -exec echo '$(OBJ_DIR)/{}' \; | sed 's/src\/tests\///;s/\/\.\//\//;s/\.cc/.o/')
 
 # CASES
 build: $(OBJ_DIR)/$(PROGRAM_NAME)
