@@ -17,6 +17,7 @@
 #define BUBBLE_SORT_H_
 
 #include "vector.h"
+#include "utils.h"
 
 namespace sort {
     /**
