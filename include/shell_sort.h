@@ -18,14 +18,18 @@
 
 #include "vector.h"
 
-namespace sort {
+namespace sort
+{
     /**
      * @brief Utiliza o algoritmo ShellSort para ordenar o vector
      *        O método de atualização utiliza-se do número de ouro e é dado pelo piso da equação h /= PHI
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
      */
-    template<typename typeT>
-    inline void Shell(Vector<typeT> &vector) {
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Shell(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
         unsigned int h = 1;
         unsigned int j;
         unsigned int operacoes = 0;
@@ -33,11 +37,14 @@ namespace sort {
         while (h < vector.Size() / std::numbers::phi)
             h = std::ceil(h * std::numbers::phi);
 
-        while (h >= 1) {
-            for (unsigned int i = h; i < vector.Size(); i++) {
+        while (h >= 1)
+        {
+            for (unsigned int i = h; i < vector.Size(); i++)
+            {
                 j = i;
 
-                while (j >= h and vector[j - h] > vector[j]) {
+                while (j >= h and comp(vector[j], vector[j - h]))
+                {
                     operacoes++;
                     vector.Swap(j, j - h);
                     j -= h;

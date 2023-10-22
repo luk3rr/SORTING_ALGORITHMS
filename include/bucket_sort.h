@@ -19,24 +19,30 @@
 #include "vector.h"
 #include "insertion_sort.h"
 
-namespace sort {
+namespace sort
+{
     /**
      * @brief Utiliza o algoritmo BucketSort para ordenar o vector
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
      */
-    template<typename typeT>
-    inline void Bucket(Vector<typeT> &vector) {
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Bucket(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
         const unsigned int numBuckets = 10;
         typeT buckets[numBuckets][vector.Size()];
         int *bucketSizes = new int[numBuckets](); // Cria um array preenchido com 0's
 
         int max = vector[0];
         for (unsigned int i = 1; i < vector.Size(); i++)
-            if (vector[i] > max) max = vector[i];
+            if (comp(max, vector[i]))
+                max = vector[i];
 
         // Faz a distribuição das chaves nos baldes
         unsigned int index;
-        for (unsigned int i = 0; i < vector.Size(); i++) {
+        for (unsigned int i = 0; i < vector.Size(); i++)
+        {
             index = numBuckets * vector[i] / (max + 1);
             buckets[index][bucketSizes[index]] = vector[i];
             bucketSizes[index]++;
@@ -48,7 +54,8 @@ namespace sort {
 
         // Junta os trem que foram ordenados
         index = 0;
-        for (unsigned int i = 0; i < numBuckets; i++) {
+        for (unsigned int i = 0; i < numBuckets; i++)
+        {
             for (int j = 0; j < bucketSizes[i]; j++)
                 vector[index++] = buckets[i][j];
         }

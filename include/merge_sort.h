@@ -18,16 +18,21 @@
 
 #include "vector.h"
 
-namespace sort {
+namespace sort
+{
     // Private methods
-    namespace  {
+    namespace
+    {
         /**
          * @brief Une os vetores ordenados
          * @param subvector Subvector que será ordenado
          * @param left, middle, right Índices do início, meio e fim do subarray
+         * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+         *        o comparador padrão less será utilizado
          */
-        template<typename typeT>
-        inline void MergeSortedSubarrays(Vector<typeT> &subvector, int left, int middle, int right) {
+        template<typename typeT, typename Compare = utils::less<typeT>>
+        inline void MergeSortedSubarrays(Vector<typeT> &subvector, int left, int middle, int right, Compare comp = utils::less<typeT>())
+        {
             unsigned int firstHalf = middle - left + 1;
             unsigned int secondHalf = right - middle;
 
@@ -44,8 +49,9 @@ namespace sort {
             i = j = 0;
             k = left;
 
-            while (i < firstHalf and j < secondHalf) {
-                if (leftArray[i] <= rightArray[j])
+            while (i < firstHalf and j < secondHalf)
+            {
+                if (comp(leftArray[i], rightArray[j])) // TODO: verificar funcionalidade, <= antes
                     subvector[k++] = leftArray[i++];
 
                 else
@@ -63,14 +69,18 @@ namespace sort {
          * @brief Auxilia o algoritmo de MergeSort dividindo o vector de forma recursiva
          * @param subvector Subvector que será ordenado
          * @param left, right Índices de onde começa e termina o subarray
+         * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+         *        o comparador padrão less será utilizado
          */
-        template<typename typeT>
-        inline void MergeSortHelper(Vector<typeT> &subvector, int left, int right) {
-            if (left < right) {
+        template<typename typeT, typename Compare = utils::less<typeT>>
+        inline void MergeSortHelper(Vector<typeT> &subvector, int left, int right, Compare comp = utils::less<typeT>())
+        {
+            if (left < right)
+            {
                 int middle = left + (right - left) / 2; // Evita overflow para valores de left e right grandes
-                MergeSortHelper(subvector, left, middle);
-                MergeSortHelper(subvector, middle + 1, right);
-                MergeSortedSubarrays(subvector, left, middle, right);
+                MergeSortHelper(subvector, left, middle, comp);
+                MergeSortHelper(subvector, middle + 1, right, comp);
+                MergeSortedSubarrays(subvector, left, middle, right, comp);
             }
         }
     } // Private methods
@@ -78,10 +88,13 @@ namespace sort {
     /**
      * @brief Utiliza o algoritmo MergeSort para ordenar o vector
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
      */
-    template<typename typeT>
-    inline void Merge(Vector<typeT> &vector) {
-        MergeSortHelper(vector, 0, vector.Size() - 1);
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Merge(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
+        MergeSortHelper(vector, 0, vector.Size() - 1, comp);
     }
 }
 

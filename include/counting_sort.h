@@ -18,19 +18,28 @@
 
 #include "vector.h"
 
-namespace sort {
+namespace sort
+{
     /**
      * @brief Utiliza o algoritmo CountingSort para ordenar o vector
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
+     *        OBS.: O comparador é utilizado apenas para encontrar o max e o min elemento no vector
      */
-    template<typename typeT>
-    inline void Counting(Vector<typeT> &vector) {
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Counting(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
         int max = vector[0];
         int min = vector[0];
 
-        for (unsigned int i = 0; i < vector.Size(); i++) {
-            if (vector[i] > max) max = vector[i];
-            else if (vector[i] < min) min = vector[i];
+        for (unsigned int i = 0; i < vector.Size(); i++)
+        {
+            if (comp(max, vector[i]))
+                max = vector[i];
+
+            else if (comp(vector[i], min))
+                min = vector[i];
         }
 
         unsigned int countSize = max - min + 1;
@@ -43,8 +52,10 @@ namespace sort {
         unsigned int index = 0;
 
         // Ordena o array
-        for (int i = 0; i <= max; i++) {
-            while (countArray[i] > 0) {
+        for (int i = 0; i <= max; i++)
+        {
+            while (countArray[i] > 0)
+            {
                 vector[index++] = i;
                 countArray[i]--;
             }

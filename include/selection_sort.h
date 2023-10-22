@@ -18,20 +18,26 @@
 
 #include "vector.h"
 
-namespace sort {
+namespace sort
+{
     /**
      * @brief Utiliza o algoritmo SelectionSort para ordenar o vector
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
      */
-    template <typename typeT>
-    inline void Selection(Vector<typeT> &vector) {
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Selection(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
         unsigned int min;
 
-        for (unsigned int i = 0; i < vector.Size() - 1; i++) {
+        for (unsigned int i = 0; i < vector.Size() - 1; i++)
+        {
             min = i;
 
-            for (unsigned int j = i + 1; j < vector.Size(); j++) {
-                if (vector[j] < vector[min])
+            for (unsigned int j = i + 1; j < vector.Size(); j++)
+            {
+                if (comp(vector[j], vector[min]))
                     min = j;
             }
 

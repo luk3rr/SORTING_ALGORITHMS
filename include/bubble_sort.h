@@ -19,20 +19,27 @@
 #include "vector.h"
 #include "utils.h"
 
-namespace sort {
+namespace sort
+{
     /**
      * @brief Utiliza o algoritmo BubbleSort para ordenar o vector
      * @param vector Vector que será ordenado
+     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
+     *        o comparador padrão less será utilizado
      */
-    template<typename typeT>
-    inline void Bubble(Vector<typeT> &vector) {
+    template<typename typeT, typename Compare = utils::less<typeT>>
+    inline void Bubble(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    {
         bool swapped;
 
-        for (unsigned int i = 0; i < vector.Size() - 1; i++) {
+        for (unsigned int i = 0; i < vector.Size() - 1; i++)
+        {
             swapped = false;
 
-            for (unsigned int j = 0; j < vector.Size() - i - 1; j++) {
-                if (vector[j] > vector[j + 1]) {
+            for (unsigned int j = 0; j < vector.Size() - i - 1; j++)
+            {
+                if (comp(vector[j + 1], vector[j]))
+                {
                     vector.Swap(j + 1, j);
                     swapped = true;
                 }
