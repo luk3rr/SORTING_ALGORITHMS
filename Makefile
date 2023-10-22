@@ -4,6 +4,7 @@ OBJ_DIR = build
 INC_DIR = include
 MODULES_DIR = modules
 INC_SUBMODULES := $(shell find $(MODULES_DIR) -type d -name include)
+INC_SUBMODULES := $(patsubst %,-I %, $(INC_SUBMODULES)) # Adiciona "-I" em cada caminho encontrado
 BIN_DIR = bin
 TST_DIR = $(SRC_DIR)/tests
 LIB_DIR = $(INC_DIR)/lib
@@ -40,10 +41,10 @@ SUB_MODULES_OBJS := $(shell find $(MODULES_DIR) -type f -name "*.cc" ! -name "ma
 TEST_OBJS := $(shell find $(TST_DIR) -type f -name "*.cc" -exec echo '$(OBJ_DIR)/{}' \; | sed 's/src\/tests\///;s/\/\.\//\//;s/\.cc/.o/')
 
 # CASES
-build: $(OBJ_DIR)/$(PROGRAM_NAME)
+build: submodules $(OBJ_DIR)/$(PROGRAM_NAME)
 
 submodules:
-	git submodule update --remote --recursive
+	git submodule update --init --recursive
 
 	@echo "Building submodules..."
 	@for submodule in $(wildcard modules/*); do \
@@ -65,13 +66,13 @@ $(OBJ_DIR)/$(PROGRAM_NAME): $(PROGRAM_OBJS) $(MAIN)
 	$(CC) $(CFLAGS) $(PROGRAM_OBJS) $(SUB_MODULES_OBJS) $(MAIN) -o $(BIN_DIR)/$(PROGRAM_NAME)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc $(INC_DIR)/%.h
-	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -I $(INC_SUBMODULES) -o $@
+	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) $(INC_SUBMODULES) -o $@
 
 $(OBJ_DIR)/%.o: $(TST_DIR)/%.cc
-	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -I $(INC_SUBMODULES) -I $(LIB_DIR) -o $@
+	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) $(INC_SUBMODULES) -I $(LIB_DIR) -o $@
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cc
-	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) -I $(INC_SUBMODULES) -o $@
+	$(CC) -c $(CFLAGS) $< -I $(INC_DIR) $(INC_SUBMODULES) -o $@
 
 valgrind: tests build
 	valgrind --leak-check=full $(BIN_DIR)/$(TEST_NAME) > /dev/null
