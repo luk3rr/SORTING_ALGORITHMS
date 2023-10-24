@@ -36,8 +36,8 @@ namespace sort
             unsigned int firstHalf = middle - left + 1;
             unsigned int secondHalf = right - middle;
 
-            int leftArray[firstHalf];
-            int rightArray[secondHalf];
+            typeT leftArray[firstHalf];
+            typeT rightArray[secondHalf];
 
             for (unsigned int i = 0; i < firstHalf; i++)
                 leftArray[i] = subvector[left + i];

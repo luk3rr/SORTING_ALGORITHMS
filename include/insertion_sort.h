@@ -29,7 +29,8 @@ namespace sort
     template<typename typeT, typename Compare = utils::less<typeT>>
     inline void Insertion(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
     {
-        int key, j;
+        typeT key;
+        int j;
 
         for (unsigned int i = 1; i < vector.Size(); i++)
         {
