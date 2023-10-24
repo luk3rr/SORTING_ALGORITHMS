@@ -41,7 +41,7 @@ SUB_MODULES_OBJS := $(shell find $(MODULES_DIR) -type f -name "*.cc" ! -name "ma
 TEST_OBJS := $(shell find $(TST_DIR) -type f -name "*.cc" -exec echo '$(OBJ_DIR)/{}' \; | sed 's/src\/tests\///;s/\/\.\//\//;s/\.cc/.o/')
 
 # CASES
-build: submodules $(OBJ_DIR)/$(PROGRAM_NAME)
+build: $(OBJ_DIR)/$(PROGRAM_NAME)
 
 submodules:
 	git submodule update --init --recursive
