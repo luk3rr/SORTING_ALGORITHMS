@@ -44,12 +44,12 @@ TEST_OBJS := $(shell find $(TST_DIR) -type f -name "*.cc" -exec echo '$(OBJ_DIR)
 build: $(OBJ_DIR)/$(PROGRAM_NAME)
 
 submodules:
-	git submodule update --init --recursive
+	git submodule update --init --remote --recursive
 
 	@echo "Building submodules..."
 	@for submodule in $(wildcard modules/*); do \
 		echo "Building $$submodule..."; \
-		(cd $$submodule && make clean && make); \
+		(cd $$submodule && make clean && make submodules || true && make); \
 	done
 	@echo "Submodules built"
 
