@@ -1,41 +1,42 @@
 /*
-* Filename: selection_sort.h
-* Created on: July  9, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*
-* Implementação do algoritmo de ordenação SelectionSort
-*
-* Complexidade de tempo
-* Pior caso:   O(n^2)
-* Caso médio:  O(n^2)
-* Melhor caso: O(n^2)
-*
-* Complexiade de espaço O(n)
-*/
+ * Filename: selection_sort.h
+ * Created on: July  9, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the SelectionSort algorithm
+ *
+ * Time complexity:
+ * Worst case:   O(n^2)
+ * Average case: O(n^2)
+ * Best case:    O(n^2)
+ *
+ * Space complexity: O(1), since it does not require extra space to sort
+ */
 
 #ifndef SELECTION_SORT_H_
 #define SELECTION_SORT_H_
 
 #include "vector.h"
+#include <cstddef>
 
 namespace sort
 {
     /**
-     * @brief Utiliza o algoritmo SelectionSort para ordenar o vector
-     * @param vector Vector que será ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
+     * @brief Uses the SelectionSort algorithm to sort the vector
+     * @param vector Vector to be sorted
+     * @param comp Custom element comparator. If no custom comparator is provided,
+     * the default comparator "less" will be used.
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Selection(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    inline void Selection(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
     {
-        unsigned int min;
+        std::size_t min;
 
-        for (unsigned int i = 0; i < vector.Size() - 1; i++)
+        for (std::size_t i = 0; i < vector.Size() - 1; i++)
         {
             min = i;
 
-            for (unsigned int j = i + 1; j < vector.Size(); j++)
+            for (std::size_t j = i + 1; j < vector.Size(); j++)
             {
                 if (comp(vector[j], vector[min]))
                     min = j;
@@ -45,6 +46,6 @@ namespace sort
                 vector.Swap(min, i);
         }
     }
-}
+} // namespace sort
 
 #endif // SELECTION_SORT_H_

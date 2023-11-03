@@ -1,41 +1,43 @@
 /*
-* Filename: insertion_sort.h
-* Created on: July  9, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*
-* Implementação do algoritmo de ordenação InsertionSort
-*
-* Complexidade de tempo
-* Pior caso:   O(n^2)
-* Caso médio:  O(n^2)
-* Melhor caso: O(n)
-*
-* Complexidade de espaço O(n)
-*/
+ * Filename: insertion_sort.h
+ * Created on: July  9, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the InsertionSort sorting algorithm
+ *
+ * Time complexity
+ * Worst case:   O(n^2)
+ * Average case: O(n^2)
+ * Best case:    O(n)
+ *
+ * Space complexity: O(1), since it does not require extra space to sort
+ **/
 
 #ifndef INSERTION_SORT_H_
 #define INSERTION_SORT_H_
 
 #include "vector.h"
+#include <cstddef>
+#include <cstdint>
 
 namespace sort
 {
     /**
-     * @brief Utiliza o algoritmo InsertionSort para ordenar o vector
-     * @param vector Vector que será ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
+     * @brief Uses the InsertionSort algorithm to sort the vector
+     * @param vector Vector to be sorted
+     * @param comp Custom element comparator. If no custom comparator is provided,
+     * the default comparator "less" will be used
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Insertion(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    inline void Insertion(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
     {
-        typeT key;
-        int j;
+        typeT   key;
+        int32_t j;
 
-        for (unsigned int i = 1; i < vector.Size(); i++)
+        for (std::size_t i = 1; i < vector.Size(); i++)
         {
             key = vector[i];
-            j = i - 1;
+            j   = i - 1;
 
             while (j >= 0 and comp(key, vector[j]))
             {
@@ -47,21 +49,23 @@ namespace sort
     }
 
     /**
-     * @brief Utiliza o algoritmo InsertionSort para ordenar o array
-     * @param array Array que será ordenado
-     * @param size Tamanho do intervalo que deve ser ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
+     * @brief Uses the InsertionSort algorithm to sort the array
+     * @param array Array to be sorted
+     * @param size Size of the interval to be sorted
+     * @param comp Custom element comparator. If no custom comparator is provided,
+     * the default comparator "less" will be used
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Insertion(typeT array[], unsigned int size, Compare comp = utils::less<typeT>())
+    inline void
+    Insertion(typeT array[], std::size_t size, Compare comp = utils::less<typeT>())
     {
-        int key, j;
+        typeT   key;
+        int32_t j;
 
-        for (unsigned int i = 0; i < size; i++)
+        for (std::size_t i = 0; i < size; i++)
         {
             key = array[i];
-            j = i - 1;
+            j   = i - 1;
 
             while (j >= 0 and comp(key, array[j]))
             {
@@ -71,6 +75,6 @@ namespace sort
             array[j + 1] = key;
         }
     }
-}
+} // namespace sort
 
 #endif // INSERTION_SORT_H_

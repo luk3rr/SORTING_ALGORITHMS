@@ -1,67 +1,73 @@
 /*
-* Filename: bucket_sort.h
-* Created on: July  9, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*
-* Implementação do algoritmo de ordenação BucketSort
-*
-* Complexidade de tempo, onde k é o número de baldes
-* Pior caso:   O(n^2)
-* Caso médio:  O(n + k)
-* Melhor caso: O(n + k)
-*
-* Complexidade de espaço O(n + k)
-*/
+ * Filename: bucket_sort.h
+ * Created on: July  9, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the BucketSort algorithm
+ *
+ * Time complexity, where k is the number of buckets:
+ * Worst case:   O(n^2)
+ * Average case: O(n + k)
+ * Best case:    O(n + k)
+ *
+ * Space complexity: O(n + k)
+ */
 
 #ifndef BUCKET_SORT_H_
 #define BUCKET_SORT_H_
 
-#include "vector.h"
 #include "insertion_sort.h"
+#include "vector.h"
+#include <cstddef>
 
 namespace sort
 {
     /**
-     * @brief Utiliza o algoritmo BucketSort para ordenar o vector
-     * @param vector Vector que será ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
+     * @brief Uses the BucketSort algorithm to sort the vector
+     * @param vector The vector to be sorted
+     * @param comp Custom comparator for elements. If not provided, the default 'less'
+     * comparator will be used
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Bucket(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    inline void Bucket(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
     {
-        const unsigned int numBuckets = 10;
-        typeT buckets[numBuckets][vector.Size()];
-        int *bucketSizes = new int[numBuckets](); // Cria um array preenchido com 0's
+        const std::size_t numBuckets = 10;
 
-        int max = vector[0];
-        for (unsigned int i = 1; i < vector.Size(); i++)
+        typeT buckets[numBuckets][vector.Size()];
+
+        // Creates an array filled with 0's
+        std::size_t* bucketSizes = new std::size_t[numBuckets]();
+
+        typeT max = vector[0];
+        for (std::size_t i = 1; i < vector.Size(); i++)
             if (comp(max, vector[i]))
                 max = vector[i];
 
-        // Faz a distribuição das chaves nos baldes
-        unsigned int index;
-        for (unsigned int i = 0; i < vector.Size(); i++)
+        // Distributes the keys into the buckets
+        std::size_t index;
+        for (std::size_t i = 0; i < vector.Size(); i++)
         {
             index = numBuckets * vector[i] / (max + 1);
+
             buckets[index][bucketSizes[index]] = vector[i];
             bucketSizes[index]++;
         }
 
-        // Ordena os elementos em cada balde
-        for (unsigned int i = 0; i < numBuckets; i++)
+        // Sorts the elements in each bucket. In this case, we use the insertion sort
+        // algorithm
+        for (std::size_t i = 0; i < numBuckets; i++)
             Insertion(buckets[i], bucketSizes[i]);
 
-        // Junta os trem que foram ordenados
+        // Merges the sorted items together
         index = 0;
-        for (unsigned int i = 0; i < numBuckets; i++)
+        for (std::size_t i = 0; i < numBuckets; i++)
         {
-            for (int j = 0; j < bucketSizes[i]; j++)
+            for (std::size_t j = 0; j < bucketSizes[i]; j++)
                 vector[index++] = buckets[i][j];
         }
 
         delete[] bucketSizes;
     }
-}
+} // namespace sort
 
 #endif // BUCKET_SORT_H_

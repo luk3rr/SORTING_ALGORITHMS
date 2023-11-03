@@ -1,58 +1,63 @@
 /*
-* Filename: counting_sort.h
-* Created on: July  9, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*
-* Implementação do algoritmo de ordenação CountingSort
-*
-* Complexidade de tempo, onde k é o intervalo dos valores dos elementos
-* Pior caso:   O(n + k)
-* Caso médio:  O(n + k)
-* Melhor caso: O(n + k)
-*
-* Complexidade de espaço O(n + k)
-*/
+ * Filename: counting_sort.h
+ * Created on: July  9, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the CountingSort algorithm
+ *
+ * Time complexity, where k is the range of element values
+ * Worst case:   O(n + k)
+ * Average case: O(n + k)
+ * Best case:    O(n + k)
+ *
+ * Space complexity: O(n + k)
+ */
 
 #ifndef COUNTING_SORT_H_
 #define COUNTING_SORT_H_
 
 #include "vector.h"
+#include <cstddef>
+#include <type_traits>
 
 namespace sort
 {
     /**
-     * @brief Utiliza o algoritmo CountingSort para ordenar o vector
-     * @param vector Vector que será ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
-     *        OBS.: O comparador é utilizado apenas para encontrar o max e o min elemento no vector
+     * @brief Uses the CountingSort algorithm to sort the vector
+     * @param vector The vector to be sorted
+     * @param comp Custom comparator for elements. If not provided, the default 'less'
+     * comparator will be used
+     *
+     * NOTE: This function is enabled only if typeT is a integer value
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Counting(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    template<typename typeT>
+    typename std::enable_if<std::is_integral<typeT>::value>::type
+    Counting(Vector<typeT>& vector)
     {
-        int max = vector[0];
-        int min = vector[0];
+        typeT max = vector[0];
+        typeT min = vector[0];
 
-        for (unsigned int i = 0; i < vector.Size(); i++)
+        for (std::size_t i = 0; i < vector.Size(); i++)
         {
-            if (comp(max, vector[i]))
+            if (max < vector[i])
                 max = vector[i];
 
-            else if (comp(vector[i], min))
+            else if (vector[i] < min)
                 min = vector[i];
         }
 
-        unsigned int countSize = max - min + 1;
-        int *countArray = new int[countSize](); // Cria um array preenchido com 0's
+        std::size_t countSize = max - min + 1;
 
-        // Calcula a frequência de cada valor
-        for (unsigned int i = 0; i < countSize; i++)
+        std::size_t* countArray = new std::size_t[countSize]();
+
+        // Calculates the frequency of each value
+        for (std::size_t i = 0; i < countSize; i++)
             countArray[vector[i]]++;
 
-        unsigned int index = 0;
+        std::size_t index = 0;
 
-        // Ordena o array
-        for (int i = 0; i <= max; i++)
+        // Sort the array
+        for (std::size_t i = 0; i <= max; i++)
         {
             while (countArray[i] > 0)
             {
@@ -63,6 +68,6 @@ namespace sort
 
         delete[] countArray;
     }
-}
+} // namespace sort
 
 #endif // COUNTING_SORT_H_

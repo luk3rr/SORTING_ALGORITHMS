@@ -1,22 +1,24 @@
 /*
-* Filename: heap_sort.h
-* Created on: July  9, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*
-* Implementação do algoritmo de ordenação HeapSort
-*
-* Complexidade de tempo
-* Pior caso:   O(n log n)
-* Caso médio:  O(n log n)
-* Melhor caso: O(n log n)
-*
-* Complexidade de espaço O(n)
-*/
+ * Filename: heap_sort.h
+ * Created on: July  9, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the HeapSort algorithm
+ *
+ * Time complexity
+ * Worst case:   O(n log n)
+ * Average case: O(n log n)
+ * Best case:    O(n log n)
+ *
+ * Space complexity: O(1), since it does not require extra space to sort
+ **/
 
 #ifndef HEAP_SORT_H_
 #define HEAP_SORT_H_
 
 #include "vector.h"
+#include <cstddef>
+#include <cstdint>
 
 namespace sort
 {
@@ -24,19 +26,22 @@ namespace sort
     namespace
     {
         /**
-         * @brief Transforma o subvector em uma estrutura de dados do tipo heap
-         * @param subvector Subvector que será transformado em um heap
-         * @param position Posição do elemento do array que será ajustado
-         * @param heapSize Tamanho do heap
-         * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-         *        o comparador padrão less será utilizado
+         * @brief Transforms the subvector into a heap data structure
+         * @param subvector Subvector to be transformed into a heap
+         * @param position Position of the array element to be adjusted
+         * @param heapSize Heap size
+         * @param comp Custom element comparator. If no custom comparator is provided,
+         * the default comparator "less" will be used
          */
         template<typename typeT, typename Compare = utils::less<typeT>>
-        inline void MaxHeapify(Vector<typeT> &subvector, unsigned int position, unsigned int heapSize, Compare comp = utils::less<typeT>())
+        inline void MaxHeapify(Vector<typeT>& subvector,
+                               std::size_t    position,
+                               std::size_t    heapSize,
+                               Compare        comp = utils::less<typeT>())
         {
-            unsigned int largest = position;
-            unsigned int left = 2 * position + 1;
-            unsigned int right = 2 * position + 2;
+            std::size_t largest = position;
+            std::size_t left    = 2 * position + 1;
+            std::size_t right   = 2 * position + 2;
 
             if (left < heapSize and comp(subvector[largest], subvector[left]))
                 largest = left;
@@ -52,38 +57,41 @@ namespace sort
         }
 
         /**
-         * @brief Constroí o heap inicial
-         * @param array Array que será transformado em um heap
-         * @param heapSize Tamanho do heap
-         * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-         *        o comparador padrão less será utilizado
+         * @brief Builds the initial heap
+         * @param array Array to be transformed into a heap
+         * @param heapSize Heap size
+         * @param comp Custom element comparator. If no custom comparator is provided,
+         * the default comparator "less" will be used
          */
         template<typename typeT, typename Compare = utils::less<typeT>>
-        inline void BuildMaxHeap(Vector<typeT> &vector, unsigned int heapSize, Compare comp = utils::less<typeT>())
+        inline void BuildMaxHeap(Vector<typeT>& vector,
+                                 std::size_t    heapSize,
+                                 Compare        comp = utils::less<typeT>())
         {
-            for (int i = heapSize / 2 - 1; i >= 0; i--)
+            // This loop stops when i = -1
+            for (int32_t i = heapSize / 2 - 1; i >= 0; i--)
                 MaxHeapify(vector, i, heapSize, comp);
         }
 
-    } // Private methods
+    } // namespace
 
     /**
-     * @brief Utiliza o algoritmo HeapSort para ordenar o vector
-     * @param vector Vector que será ordenado
-     * @param comp Comparador personalizado dos elementos. Se não for passado um comparador
-     *        o comparador padrão less será utilizado
+     * @brief Uses the HeapSort algorithm to sort the vector
+     * @param vector Vector to be sorted
+     * @param comp Custom element comparator. If no custom comparator is provided,
+     * the default comparator "less" will be used
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Heap(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    inline void Heap(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
     {
         BuildMaxHeap(vector, vector.Size(), comp);
 
-        for (int i = vector.Size() - 1; i > 0; i--)
+        for (std::size_t i = vector.Size() - 1; i > 0; i--)
         {
             vector.Swap(0, i);
             MaxHeapify(vector, 0, i, comp);
         }
     }
-}
+} // namespace sort
 
 #endif // HEAP_SORT_H_

@@ -1,8 +1,18 @@
 /*
-* Filename: quick_sort.h
-* Created on: October 23, 2023
-* Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
-*/
+ * Filename: quick_sort.h
+ * Created on: October 23, 2023
+ * Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
+ *
+ * Implementation of the QuickSort sorting algorithm
+ *
+ * Time complexity:
+ * Worst case:   O(n^2)
+ * Average case: O(n log n)
+ * Best case:    O(n log n)
+ *
+ * Space complexity: O(n) in the worst case due to potential stack space usage,
+ * but O(log n) in the average and best cases when the recursion is balanced
+ **/
 
 #ifndef QUICK_SORT_H_
 #define QUICK_SORT_H_
@@ -20,13 +30,18 @@ namespace sort
          * @param vector Vector to be partitioned
          * @param low Index of the subarray's start
          * @param high Index of the subarray's end
-         * @param comp Custom element comparator. If not provided, the default 'less' comparator will be used.
+         * @param comp Custom element comparator. If not provided, the default 'less'
+         * comparator will be used.
          * @return The index of the pivot after partitioning
          */
         template<typename typeT, typename Compare = utils::less<typeT>>
-        inline std::size_t Partition(Vector<typeT> &vector, const std::size_t &low, const std::size_t &high, Compare comp = utils::less<typeT>())
+        inline std::size_t Partition(Vector<typeT>&     vector,
+                                     const std::size_t& low,
+                                     const std::size_t& high,
+                                     Compare            comp = utils::less<typeT>())
         {
             typeT pivot = vector[high];
+
             std::size_t i = low;
             for (std::size_t j = low; j < high; j++)
             {
@@ -46,10 +61,14 @@ namespace sort
          * @param vector Vector to be sorted
          * @param low Index of the subarray's start
          * @param high Index of the subarray's end
-         * @param comp Custom element comparator. If not provided, the default 'less' comparator will be used.
+         * @param comp Custom element comparator. If not provided, the default 'less'
+         * comparator will be used.
          */
         template<typename typeT, typename Compare = utils::less<typeT>>
-        inline void Quick(Vector<typeT> &vector, const std::size_t &low, const std::size_t &high, Compare comp = utils::less<typeT>())
+        inline void Quick(Vector<typeT>&     vector,
+                          const std::size_t& low,
+                          const std::size_t& high,
+                          Compare            comp = utils::less<typeT>())
         {
             if (low < high)
             {
@@ -62,18 +81,19 @@ namespace sort
             }
         }
 
-    } // Private methods
+    } // namespace
 
     /**
      * @brief Uses the Quick Sort algorithm to sort the vector
      * @param vector Vector to be sorted
-     * @param comp Custom element comparator. If not provided, the default 'less' comparator will be used.
+     * @param comp Custom element comparator. If not provided, the default 'less'
+     * comparator will be used.
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Quick(Vector<typeT> &vector, Compare comp = utils::less<typeT>())
+    inline void Quick(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
     {
         Quick(vector, 0, vector.Size() - 1, comp);
     }
-}
+} // namespace sort
 
 #endif // QUICK_SORT_H_
