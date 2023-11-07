@@ -2,6 +2,7 @@
 # Created on: November  5, 2023
 # Author: Lucas Araújo <araujolucas@dcc.ufmg.br>
 
+# Set default parameters
 CMAKE_MINIMUM_REQUIRED(VERSION 3.5)
 
 PROJECT(SortingAlgorithms)
@@ -17,28 +18,28 @@ SET(INC_DIR ${CMAKE_SOURCE_DIR}/include)
 SET(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/build/libs)
 SET(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/bin)
 
-# Get all files in the folders SRC_DIR and UNIT_TEST_DIR
-AUX_SOURCE_DIRECTORY(${SRC_DIR} PROGRAM)
-AUX_SOURCE_DIRECTORY(${UNIT_TEST_DIR} UNIT_TESTS)
-
-INCLUDE_DIRECTORIES(${INC_DIR})
-INCLUDE_DIRECTORIES(${INC_DIR}/lib)
-
-# Define the libs
-ADD_LIBRARY(SortingAlgorithms ${PROGRAM})
-# TARGET_LINK_LIBRARIES(SortingAlgorithms)
-
-ADD_EXECUTABLE(program ${PROGRAM})
-ADD_EXECUTABLE(unit_test ${UNIT_TESTS})
-
-# Link lib to test
-TARGET_LINK_LIBRARIES(unit_test SortingAlgorithms)
-
-# Submodules
+# Manager submodules
 ## Data Structures
 SET(DATA_STRUCT_DIR ${CMAKE_SOURCE_DIR}/submodules/data_structures)
 AUX_SOURCE_DIRECTORY(${DATA_STRUCT_DIR}/src DATA_STRUCT_PROGRAM)
 INCLUDE_DIRECTORIES(${DATA_STRUCT_DIR}/include)
 ADD_LIBRARY(DataStructures ${DATA_STRUCT_PROGRAM})
 
+# Compile root project
+## Get all files in the folders SRC_DIR and UNIT_TEST_DIR
+AUX_SOURCE_DIRECTORY(${SRC_DIR} PROGRAM)
+AUX_SOURCE_DIRECTORY(${UNIT_TEST_DIR} UNIT_TESTS)
+
+INCLUDE_DIRECTORIES(${INC_DIR})
+INCLUDE_DIRECTORIES(${INC_DIR}/lib)
+
+# Define the program lib
+ADD_LIBRARY(SortingAlgorithms ${PROGRAM})
+
+# Make executables
+ADD_EXECUTABLE(program ${PROGRAM})
+ADD_EXECUTABLE(unit_test ${UNIT_TESTS})
+
+# Link libs
+TARGET_LINK_LIBRARIES(unit_test SortingAlgorithms)
 TARGET_LINK_LIBRARIES(SortingAlgorithms DataStructures)
