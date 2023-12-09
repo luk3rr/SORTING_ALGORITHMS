@@ -29,44 +29,52 @@ namespace sort
      * comparator will be used
      */
     template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Bucket(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
+    inline void Bucket(Vector<typeT>& vector,
+                       std::size_t    numBuckets = 10,
+                       Compare        comp       = utils::less<typeT>())
     {
-        const std::size_t numBuckets = 10;
+        Vector<std::size_t>   bucketSizes(numBuckets, 0);
+        Vector<Vector<typeT>> buckets(numBuckets);
 
-        typeT buckets[numBuckets][vector.Size()];
+        std::hash<typeT> hasher;
+        std::size_t      index;
 
-        // Creates an array filled with 0's
-        std::size_t* bucketSizes = new std::size_t[numBuckets]();
+        std::size_t max = hasher(vector[0]);
+        std::size_t aux;
 
-        typeT max = vector[0];
+        // Find the largest hash to normalize the values
         for (std::size_t i = 1; i < vector.Size(); i++)
-            if (comp(max, vector[i]))
-                max = vector[i];
+        {
+            aux = hasher(vector[i]);
+            if (max < aux)
+            {
+                max = aux;
+            }
+        }
 
-        // Distributes the keys into the buckets
-        std::size_t index;
+        // Insert elements in the buckets
         for (std::size_t i = 0; i < vector.Size(); i++)
         {
-            index = numBuckets * vector[i] / (max + 1);
-
-            buckets[index][bucketSizes[index]] = vector[i];
+            index = numBuckets * hasher(vector[i]) / (max + 1);
+            buckets[index].PushBack(vector[i]);
             bucketSizes[index]++;
         }
 
-        // Sorts the elements in each bucket. In this case, we use the insertion sort
-        // algorithm
+        // Sort each bucket
         for (std::size_t i = 0; i < numBuckets; i++)
-            Insertion(buckets[i], bucketSizes[i]);
+        {
+            Insertion(buckets[i], comp);
+        }
 
-        // Merges the sorted items together
+        // Merge the buckets
         index = 0;
         for (std::size_t i = 0; i < numBuckets; i++)
         {
             for (std::size_t j = 0; j < bucketSizes[i]; j++)
+            {
                 vector[index++] = buckets[i][j];
+            }
         }
-
-        delete[] bucketSizes;
     }
 } // namespace sort
 
