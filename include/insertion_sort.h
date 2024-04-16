@@ -16,9 +16,11 @@
 #ifndef INSERTION_SORT_H_
 #define INSERTION_SORT_H_
 
-#include "vector.h"
 #include <cstddef>
 #include <cstdint>
+
+#include "comparators.h"
+#include "vector.h"
 
 namespace sort
 {
@@ -28,8 +30,9 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Insertion(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    inline void Insertion(Vector<typeT>& vector,
+                          Compare        comp = comparators::less<typeT>)
     {
         typeT   key;
         int32_t j;
@@ -55,9 +58,10 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void
-    Insertion(typeT array[], std::size_t size, Compare comp = utils::less<typeT>())
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    inline void Insertion(typeT       array[],
+                          std::size_t size,
+                          Compare     comp = comparators::less<typeT>)
     {
         typeT   key;
         int32_t j;

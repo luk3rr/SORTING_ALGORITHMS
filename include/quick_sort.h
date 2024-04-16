@@ -17,8 +17,10 @@
 #ifndef QUICK_SORT_H_
 #define QUICK_SORT_H_
 
-#include "vector.h"
 #include <cstddef>
+
+#include "comparators.h"
+#include "vector.h"
 
 namespace sort
 {
@@ -34,11 +36,11 @@ namespace sort
          * comparator will be used.
          * @return The index of the pivot after partitioning
          */
-        template<typename typeT, typename Compare = utils::less<typeT>>
+        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
         inline std::size_t Partition(Vector<typeT>&     vector,
                                      const std::size_t& low,
                                      const std::size_t& high,
-                                     Compare            comp = utils::less<typeT>())
+                                     Compare comp = comparators::less<typeT>)
         {
             typeT pivot = vector[high];
 
@@ -64,11 +66,11 @@ namespace sort
          * @param comp Custom element comparator. If not provided, the default 'less'
          * comparator will be used.
          */
-        template<typename typeT, typename Compare = utils::less<typeT>>
+        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
         inline void Quick(Vector<typeT>&     vector,
                           const std::size_t& low,
                           const std::size_t& high,
-                          Compare            comp = utils::less<typeT>())
+                          Compare            comp = comparators::less<typeT>)
         {
             if (low < high)
             {
@@ -89,8 +91,8 @@ namespace sort
      * @param comp Custom element comparator. If not provided, the default 'less'
      * comparator will be used.
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Quick(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    inline void Quick(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
     {
         Quick(vector, 0, vector.Size() - 1, comp);
     }

@@ -16,9 +16,10 @@
 #ifndef COUNTING_SORT_H_
 #define COUNTING_SORT_H_
 
-#include "vector.h"
 #include <cstddef>
 #include <type_traits>
+
+#include "vector.h"
 
 namespace sort
 {

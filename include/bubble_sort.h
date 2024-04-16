@@ -16,9 +16,10 @@
 #ifndef BUBBLE_SORT_H_
 #define BUBBLE_SORT_H_
 
-#include "utils.h"
-#include "vector.h"
 #include <cstddef>
+
+#include "comparators.h"
+#include "vector.h"
 
 namespace sort
 {
@@ -28,8 +29,8 @@ namespace sort
      * @param comp Custom comparator for elements. If not provided, the default 'less'
      * comparator will be used
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Bubble(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    inline void Bubble(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
     {
         bool swapped;
 

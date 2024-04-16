@@ -16,9 +16,11 @@
 #ifndef BUCKET_SORT_H_
 #define BUCKET_SORT_H_
 
+#include <cstddef>
+
+#include "comparators.h"
 #include "insertion_sort.h"
 #include "vector.h"
-#include <cstddef>
 
 namespace sort
 {
@@ -28,10 +30,10 @@ namespace sort
      * @param comp Custom comparator for elements. If not provided, the default 'less'
      * comparator will be used
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
     inline void Bucket(Vector<typeT>& vector,
                        std::size_t    numBuckets = 10,
-                       Compare        comp       = utils::less<typeT>())
+                       Compare        comp       = comparators::less<typeT>)
     {
         Vector<std::size_t>   bucketSizes(numBuckets, 0);
         Vector<Vector<typeT>> buckets(numBuckets);

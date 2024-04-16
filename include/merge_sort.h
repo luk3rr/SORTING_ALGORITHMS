@@ -17,8 +17,10 @@
 #ifndef MERGE_SORT_H_
 #define MERGE_SORT_H_
 
-#include "vector.h"
 #include <cstddef>
+
+#include "comparators.h"
+#include "vector.h"
 
 namespace sort
 {
@@ -33,12 +35,12 @@ namespace sort
          * @param comp Custom element comparator. If no custom comparator is provided,
          * the default comparator "less" will be used
          */
-        template<typename typeT, typename Compare = utils::less<typeT>>
+        template<typename typeT, typename Compare>
         inline void MergeSortedSubarrays(Vector<typeT>& subvector,
                                          std::size_t    left,
                                          std::size_t    middle,
                                          std::size_t    right,
-                                         Compare        comp = utils::less<typeT>())
+                                         Compare        comp)
         {
             std::size_t firstHalf  = middle - left + 1;
             std::size_t secondHalf = right - middle;
@@ -79,11 +81,11 @@ namespace sort
          * @param comp Custom element comparator. If no custom comparator is provided,
          * the default comparator "less" will be used
          */
-        template<typename typeT, typename Compare = utils::less<typeT>>
+        template<typename typeT, typename Compare>
         inline void MergeSortHelper(Vector<typeT>& subvector,
                                     std::size_t    left,
                                     std::size_t    right,
-                                    Compare        comp = utils::less<typeT>())
+                                    Compare        comp)
         {
             if (left < right)
             {
@@ -103,8 +105,8 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = utils::less<typeT>>
-    inline void Merge(Vector<typeT>& vector, Compare comp = utils::less<typeT>())
+    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    inline void Merge(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
     {
         MergeSortHelper(vector, 0, vector.Size() - 1, comp);
     }
