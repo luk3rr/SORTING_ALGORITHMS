@@ -30,10 +30,10 @@ namespace sort
      * @param comp Custom comparator for elements. If not provided, the default 'less'
      * comparator will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
     inline void Bucket(Vector<typeT>& vector,
                        std::size_t    numBuckets = 10,
-                       Compare        comp       = comparators::less<typeT>)
+                       Compare        comp       = comparators::Less<typeT>)
     {
         Vector<std::size_t>   bucketSizes(numBuckets, 0);
         Vector<Vector<typeT>> buckets(numBuckets);

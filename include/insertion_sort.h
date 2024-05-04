@@ -30,9 +30,9 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
     inline void Insertion(Vector<typeT>& vector,
-                          Compare        comp = comparators::less<typeT>)
+                          Compare        comp = comparators::Less<typeT>)
     {
         typeT   key;
         int32_t j;
@@ -58,10 +58,10 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
     inline void Insertion(typeT       array[],
                           std::size_t size,
-                          Compare     comp = comparators::less<typeT>)
+                          Compare     comp = comparators::Less<typeT>)
     {
         typeT   key;
         int32_t j;

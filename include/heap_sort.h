@@ -35,11 +35,11 @@ namespace sort
          * @param comp Custom element comparator. If no custom comparator is provided,
          * the default comparator "less" will be used
          */
-        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+        template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
         inline void MaxHeapify(Vector<typeT>& subvector,
                                std::size_t    position,
                                std::size_t    heapSize,
-                               Compare        comp = comparators::less<typeT>)
+                               Compare        comp = comparators::Less<typeT>)
         {
             std::size_t largest = position;
             std::size_t left    = 2 * position + 1;
@@ -65,10 +65,10 @@ namespace sort
          * @param comp Custom element comparator. If no custom comparator is provided,
          * the default comparator "less" will be used
          */
-        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+        template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
         inline void BuildMaxHeap(Vector<typeT>& vector,
                                  std::size_t    heapSize,
-                                 Compare        comp = comparators::less<typeT>)
+                                 Compare        comp = comparators::Less<typeT>)
         {
             // This loop stops when i = -1
             for (int32_t i = heapSize / 2 - 1; i >= 0; i--)
@@ -83,8 +83,8 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
-    inline void Heap(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
+    inline void Heap(Vector<typeT>& vector, Compare comp = comparators::Less<typeT>)
     {
         BuildMaxHeap(vector, vector.Size(), comp);
 

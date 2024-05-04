@@ -105,8 +105,8 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
-    inline void Merge(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
+    inline void Merge(Vector<typeT>& vector, Compare comp = comparators::Less<typeT>)
     {
         MergeSortHelper(vector, 0, vector.Size() - 1, comp);
     }

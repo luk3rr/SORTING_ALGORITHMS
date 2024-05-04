@@ -29,8 +29,8 @@ namespace sort
      * @param comp Custom comparator for elements. If not provided, the default 'less'
      * comparator will be used
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
-    inline void Bubble(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
+    inline void Bubble(Vector<typeT>& vector, Compare comp = comparators::Less<typeT>)
     {
         bool swapped;
 

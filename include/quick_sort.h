@@ -36,11 +36,11 @@ namespace sort
          * comparator will be used.
          * @return The index of the pivot after partitioning
          */
-        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+        template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
         inline std::size_t Partition(Vector<typeT>&     vector,
                                      const std::size_t& low,
                                      const std::size_t& high,
-                                     Compare comp = comparators::less<typeT>)
+                                     Compare comp = comparators::Less<typeT>)
         {
             typeT pivot = vector[high];
 
@@ -66,11 +66,11 @@ namespace sort
          * @param comp Custom element comparator. If not provided, the default 'less'
          * comparator will be used.
          */
-        template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+        template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
         inline void Quick(Vector<typeT>&     vector,
                           const std::size_t& low,
                           const std::size_t& high,
-                          Compare            comp = comparators::less<typeT>)
+                          Compare            comp = comparators::Less<typeT>)
         {
             if (low < high)
             {
@@ -91,8 +91,8 @@ namespace sort
      * @param comp Custom element comparator. If not provided, the default 'less'
      * comparator will be used.
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
-    inline void Quick(Vector<typeT>& vector, Compare comp = comparators::less<typeT>)
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
+    inline void Quick(Vector<typeT>& vector, Compare comp = comparators::Less<typeT>)
     {
         Quick(vector, 0, vector.Size() - 1, comp);
     }

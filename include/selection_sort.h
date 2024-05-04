@@ -29,9 +29,9 @@ namespace sort
      * @param comp Custom element comparator. If no custom comparator is provided,
      * the default comparator "less" will be used.
      */
-    template<typename typeT, typename Compare = decltype(comparators::less<typeT>)>
+    template<typename typeT, typename Compare = decltype(comparators::Less<typeT>)>
     inline void Selection(Vector<typeT>& vector,
-                          Compare        comp = comparators::less<typeT>)
+                          Compare        comp = comparators::Less<typeT>)
     {
         std::size_t min;
 
